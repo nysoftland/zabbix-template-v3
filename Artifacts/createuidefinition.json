@@ -1,0 +1,308 @@
+﻿{
+  "handler": "Microsoft.Compute.MultiVm",
+  "version": "0.1.2-preview",
+  "parameters": {
+    "outputs": {
+      "virtualNetworkName": "[basics('virtualNetworkNameUi')]",
+      "subnetName": "[basics('subnetNameUi')]",
+
+      "storageAccountName": "[steps('monitor').storageAccount.name]",
+      "storageAccountType": "[steps('monitor').storageAccount.type]",
+      "monitorVmName": "[steps('monitor').monitorVmNameUi]",
+      "monitorVmDistro": "[steps('monitor').monitorVmDistroUi]",
+      "monitorVmUsername": "[steps('monitor').monitorVmUsernameUi]",
+      "monitorVmPassword": "[steps('monitor').monitorVmPasswordUi]",
+      "monitorVmSize": "[steps('monitor').vmSizeUi]",
+
+      "mysqlServerType": "[steps('mysql').mysqlServerTypeUi]",
+      "mysqlHost": "[steps('mysql').mysqlHostUi]",
+      "mysqlDbName": "[steps('mysql').mysqlDbNameUi]",
+      "mysqlUser": "[steps('mysql').mysqlUserUi]",
+      "mysqlPassword": "[steps('mysql').mysqlPasswordUi]",
+
+      "smtpServer": "[steps('email').smtpServerUi]",
+      "smtpUser": "[steps('email').smtpUserUi]",
+      "smtpPassword": "[steps('email').smtpPasswordUi]",
+      "notificationReceiver": "[steps('email').notificationReceiverUi]",
+
+      "artifactsLocation": "https://gallery.windowsazure.cn/artifact/20161101/Nysoftland.zabbix.1.0.6-preview/Artifacts/"
+    },
+    "basics": [
+      {
+        "name": "virtualNetworkNameUi",
+        "type": "Microsoft.Common.TextBox",
+        "label": "VM vnet name",
+        "toolTip": "The vnet name the monitor VM connects to.",
+        "constraints": {
+          "required": true,
+          "regex": "^[a-z0-9]{1,64}$",
+          "validationMessage": "Only lower case letters and numbers are allowed, and the name must be 1-64 characters long."
+        }
+      },
+      {
+        "name": "subnetNameUi",
+        "type": "Microsoft.Common.TextBox",
+        "label": "VM subnet name",
+        "toolTip": "The subnet name the monitor VM connects to, also agents will also be installed on those VMs.",
+        "constraints": {
+          "required": true,
+          "regex": "^[A-Za-z0-9][A-Za-z0-9_.-]{1,80}$",
+          "validationMessage": "The name must begin with a letter and a number that ends with a letter or a number, and can only contain letters, numbers, underscores, periods, or hyphens. The name must be between 1 and 80 characters long."
+        }
+      }
+    ],
+    "steps": [
+      {
+        "name": "monitor",
+        "label": "Monitor settings",
+        "subLabel": {
+          "preValidation": "Configure monitor settings",
+          "postValidation": "Done"
+        },
+        "bladeTitle": "Monitor settings",
+        "elements": [
+          {
+            "name": "storageAccount",
+            "type": "Microsoft.Storage.StorageAccountSelector",
+            "label": "The Storage account name",
+            "toolTip": "The Storage account for storing VM vhd.",
+            "defaultValue": {
+              "type": "Standard_LRS"
+            },
+            "options": {
+              "hideExisting": true
+            },
+            "constraints": {
+              "allowedTypes": [
+                "Standard_LRS",
+                "Standard_GRS",
+                "Standard_RAGRS"
+              ]
+            }
+          },
+          {
+            "name": "vmSizeUi",
+            "type": "Microsoft.Compute.SizeSelector",
+            "label": "Virtual machine size",
+            "toolTip": "Size of Azure virtual machine to provision for VM-Series(Default Standard_A4)",
+            "recommendedSizes": [
+              "Standard_A4",
+              "Standard_A6"
+            ],
+            "constraints": {
+              "excludedSizes": [
+                "Basic_A0",
+                "Basic_A1",
+                "Basic_A2",
+                "Basic_A3",
+                "Basic_A4",
+                "Standard_A0",
+                "Standard_A1",
+                "Standard_A2",
+                "Standard_D1",
+                "Standard_D2",
+                "Standard_A1_v2",
+                "Standard_A2_v2",
+                "Standard_D1_v2",
+                "Standard_D2_v2"
+                ]
+            },
+            "osPlatform": "Linux"
+          },
+          {
+            "name": "monitorVmNameUi",
+            "type": "Microsoft.Common.TextBox",
+            "label": "Name for the monitor VM",
+            "toolTip": "Name for the monitor VM. This would become part of the fully qualified domain name for monitor VM, thus it should be globally unique.",
+            "constraints": {
+              "required": true,
+              "regex": "^[A-Za-z0-9]{1,64}$",
+              "validationMessage": "Only alphanumeric characters are allowed, and the name must be 1-64 characters long."
+            }
+          },
+          {
+            "name": "monitorVmDistroUi",
+            "type": "Microsoft.Common.OptionsGroup",
+            "label": "Distro type for VM",
+            "toolTip": "Distro type for VM.",
+            "defaultValue": "Ubuntu",
+            "constraints": {
+              "allowedValues": [
+                {
+                  "label": "Ubuntu",
+                  "value": "Ubuntu"
+                },
+                {
+                  "label": "CentOS",
+                  "value": "CentOS"
+                }
+              ]
+            }
+          },
+          {
+            "name": "monitorVmUsernameUi",
+            "type": "Microsoft.Common.UserNameTextBox",
+            "label": "Monitor VM user name",
+            "toolTip": "Monitor VM user name.",
+            "constraints": {
+              "required": true
+            },
+            "osPlatform": "Linux"
+          },
+          {
+            "name": "monitorVmPasswordUi",
+            "type": "Microsoft.Common.PasswordBox",
+            "label": {
+              "password": "monitor Vm Password",
+              "confirmPassword": "monitor Vm Password comfirm"
+            },
+            "toolTip": "Monitor VM password.",
+            "constraints": {
+              "required": true
+            }
+          }
+        ]
+      },
+      {
+        "name": "mysql",
+        "label": "MySQL settings",
+        "subLabel": {
+          "preValidation": "Configure MySQL settings",
+          "postValidation": "Done"
+        },
+        "bladeTitle": "MySQL settings",
+        "elements": [
+          {
+            "name": "mysqlHostUi",
+            "type": "Microsoft.Common.TextBox",
+            "label": "Monitoring service backend MySQL host",
+            "toolTip": "Monitoring service backend MySQL host, only needed when 'mysqlServerType' is set to 'existing'.It is no need using 'Paas' and 'Localhost'",
+            "constraints": {
+              "required": true,
+              "regex": "^[A-Za-z0-9]{1,64}$",
+              "validationMessage": "Only alphanumeric characters are allowed, and the name must be 1-64 characters long."
+            }
+          },
+          {
+            "name": "mysqlServerTypeUi",
+            "type": "Microsoft.Common.DropDown",
+            "label": "MySQL Server type",
+            "toolTip": "MySQL Server type. 'Paas'for using mysql database on China Azure(This option is a paid service, please refer to https://www.azure.cn/pricing/details/mysql/ for price list.),'Localhost' for creating a new MySQL instance on the monitor VM, 'existing' for using an existing host.",
+            "defaultValue": "Paas",
+            "constraints": {
+              "allowedValues": [
+                {
+                  "label": "Existing",
+                  "value": "Existing"
+                },
+                {
+                  "label": "Localhost",
+                  "value": "Localhost"
+                },
+                {
+                  "label": "Paas",
+                  "value": "Paas"
+                }
+              ]
+            }
+          },
+          {
+            "name": "mysqlDbNameUi",
+            "type": "Microsoft.Common.TextBox",
+            "label": "Service backend MySQL database name",
+            "toolTip": "Monitoring service backend MySQL database name.",
+            "constraints": {
+              "required": true,
+              "regex": "^[A-Za-z0-9]{1,64}$",
+              "validationMessage": "Only alphanumeric characters are allowed, and the name must be 1-64 characters long."
+            }
+          },
+          {
+            "name": "mysqlUserUi",
+            "type": "Microsoft.Common.TextBox",
+            "label": "Monitoring service backend MySQL user name",
+            "toolTip": "Monitoring service backend MySQL user name.",
+            "constraints": {
+              "required": true,
+              "regex": "^[A-Za-z0-9]{1,64}$",
+              "validationMessage": "Only alphanumeric characters are allowed, and the name must be 1-64 characters long."
+            }
+          },
+          {
+            "name": "mysqlPasswordUi",
+            "type": "Microsoft.Common.PasswordBox",
+            "label": {
+              "password": "MySQL service backend password",
+              "confirmPassword": "MySQL service backend password confirm"
+            },
+            "toolTip": "Monitoring service backend MySQL password.",
+            "constraints": {
+              "required": true,
+              "regex": "",
+              "validationMessage": ""
+            }
+          }
+
+        ]
+      },
+      {
+        "name": "email",
+        "label": "Email settings",
+        "subLabel": {
+          "preValidation": "Configure Email settings",
+          "postValidation": "Done"
+        },
+        "bladeTitle": "Email settings",
+        "elements": [
+          {
+            "name": "smtpServerUi",
+            "type": "Microsoft.Common.TextBox",
+            "label": "The smtp server and port",
+            "toolTip": "The smtp server for mail notification, format is server:port. default port is 25.",
+            "constraints": {
+              "required": true,
+              "regex": "",
+              "validationMessage": ""
+            }
+          },
+          {
+            "name": "smtpUserUi",
+            "type": "Microsoft.Common.TextBox",
+            "label": "The smtp user",
+            "toolTip": "The smtp user for mail notification.",
+            "constraints": {
+              "required": true,
+              "regex": "^[A-Za-z0-9]{1,64}$",
+              "validationMessage": "Only alphanumeric characters are allowed, and the name must be 1-64 characters long."
+            }
+          },
+          {
+            "name": "smtpPasswordUi",
+            "type": "Microsoft.Common.PasswordBox",
+            "label": {
+              "password": "The smtp password",
+              "confirmPassword": "The smtp password confirm"
+            },
+            "toolTip": "The smtp password for mail notification.",
+            "constraints": {
+              "required": true,
+              "regex": "",
+              "validationMessage": ""
+            }
+          },
+          {
+            "name": "notificationReceiverUi",
+            "type": "Microsoft.Common.TextBox",
+            "label": "The receiver's email address",
+            "toolTip": "The receiver's email address for mail notification.",
+            "constraints": {
+              "required": true,
+              "regex": "",
+              "validationMessage": ""
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

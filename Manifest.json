@@ -1,0 +1,134 @@
+{
+  "$schema": "https://gallery.azure.com/schemas/2015-04-01/manifest.json#",
+  "name": "zabbix",
+  "publisher": "Nysoftland",
+  "version": "1.0.6-preview",
+  "displayName": "ms-resource:displayName",
+  "publisherDisplayName": "ms-resource:publisherDisplayName",
+  "publisherLegalName": "ms-resource:publisherLegalName",
+  "summary": "ms-resource:summary",
+  "longSummary": "ms-resource:longSummary",
+  "description": "ms-resource:description",
+  "uiDefinition": {
+    "path": "UIDefinition.json"
+  },
+  "artifacts": [
+    {
+      "name": "DefaultTemplate",
+      "type": "Template",
+      "path": "DeploymentTemplates\\DefaultTemplate.json",
+      "isDefault": true
+    },
+    {
+      "name": "createuidefinition",
+      "type": "Custom",
+      "path": "Artifacts\\createUiDefinition.json",
+      "isDefault": false
+    },
+    {
+      "name": "readme",
+      "type": "Custom",
+      "path": "Artifacts\\readme.pdf",
+      "isDefault": false
+    },
+    {
+      "name": "monitoringAgentByIps",
+      "type": "Custom",
+      "path": "Artifacts\\monitoringAgentByIps.json",
+      "isDefault": false
+    },
+    {
+      "name": "monitoringAgentByVms",
+      "type": "Custom",
+      "path": "Artifacts\\monitoringAgentByVms.json",
+      "isDefault": false
+    },
+    {
+      "name": "monitoringAgentByVnet",
+      "type": "Custom",
+      "path": "Artifacts\\monitoringAgentByVnet.json",
+      "isDefault": false
+    },
+    {
+      "name": "monitoringServer",
+      "type": "Custom",
+      "path": "Artifacts\\monitoringServer.json",
+      "isDefault": false
+    },
+    {
+      "name": "monitoringServerDbExisting",
+      "type": "Custom",
+      "path": "Artifacts\\monitoringServerDbExisting.json",
+      "isDefault": false
+    },
+    {
+      "name": "monitoringServerDbLocalhost",
+      "type": "Custom",
+      "path": "Artifacts\\monitoringServerDbLocalhost.json",
+      "isDefault": false
+    },
+    {
+      "name": "monitoringServerDbPaas",
+      "type": "Custom",
+      "path": "Artifacts\\monitoringServerDbPaas.json",
+      "isDefault": false
+    },
+    {
+      "name": "monitoringServerDistroCentOS",
+      "type": "Custom",
+      "path": "Artifacts\\monitoringServerDistroCentOS.json",
+      "isDefault": false
+    },
+    {
+      "name": "monitoringServerDistroUbuntu",
+      "type": "Custom",
+      "path": "Artifacts\\monitoringServerDistroUbuntu.json",
+      "isDefault": false
+    },
+    {
+      "name": "setup",
+      "type": "Custom",
+      "path": "Artifacts\\setup",
+      "isDefault": false
+    },
+    {
+      "name": "templateAzureVmLinux",
+      "type": "Custom",
+      "path": "Artifacts\\templateAzureVmLinux.xml",
+      "isDefault": false
+    }
+  ],
+  "icons": {
+    "small": "Icons\\Small.png",
+    "medium": "Icons\\Medium.png",
+    "large": "Icons\\Large.png",
+    "wide": "Icons\\Wide.png"
+  },
+  "screenshots": [
+    "Screenshots\\1.png"
+  ],
+  "links": [
+    {
+      "displayName": "ms-resource:LinkDisplayName0",
+      "uri": "http://www.zabbix.com"
+    },
+    {
+      "displayName": "ms-resource:LinkDisplayName1",
+      "uri": "https://gallery.windowsazure.cn/artifact/20161101/Nysoftland.zabbix.1.0.6-preview/Artifacts/readme.pdf"
+    }
+  ],
+  "categories": [
+    "multiResourceSolution",
+    "virtualMachine",
+    "virtualMachine-Arm",
+    "azureCertified",
+    "devService",
+    "monitoring"
+  ],
+  "filters": [
+    {
+      "type": "HideKey",
+      "value": "MMP"
+    }
+  ]
+}

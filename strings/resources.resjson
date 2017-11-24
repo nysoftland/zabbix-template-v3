@@ -1,0 +1,10 @@
+{
+  "displayName": "zabbix-2.2.2（Ubuntu 14.04 LTS/OpenLogic 7.2）",
+  "publisherDisplayName": "Nysoftland",
+  "publisherLegalName": "上海南洋万邦软件技术有限公司",
+  "summary": "zabbix(http://www.zabbix.com) 是一款企业级的开源的免费网络监视工具，能有效监控Windows、Linux和Unix的主机状态，交换机路由器等网络设置，打印机等。",
+  "longSummary": "zabbix(http://www.zabbix.com) 是一款企业级的开源的免费网络监视工具，能有效监控Windows、Linux和Unix的主机状态，交换机路由器等网络设置，打印机等。",
+  "description": "<p>zabbix(<a href=\"http://www.zabbix.com\">http://www.zabbix.com</a>) 是一款企业级的开源的免费网络监视工具，能有效监控Windows、Linux和Unix的主机状态，交换机路由器等网络设置，打印机等。在系统或服务状态异常时发出邮件或短信报警第一时间通知网站运维人员，在状态恢复后发出正常的邮件或短信通知。zabbix可运行在Linux/Unix平台之上，同时提供一个基于浏览器的WEB界面以方便系统管理人员查看网络状态，各种系统问题，以及服务、应用状态等等。zabbix arm主要部署客户端 (agent)、服务端 (server，又称为monitor) 与网页前端 (web frontend) 三个部分：客户端安装在工作机器上，用于监控数据的采集；服务端一般安装在专用的一台监控服务器上，用于数据的存储与处理；网页前端用于向用户提供网页交互界面。\n<br />\n<br />\n部署zabbix监控解决方案增加功能选项如下：<br />\n1. zabbix server可选项（Ubuntu或CentOS）<br />\n2. mysql部署存放位置（localhost或existing或Azure PaaS）<br />\n3. 如果本模板部署后会使用MySQL PaaS 服务，将按以下标准对该服务进行收费：<a href=\"https://na01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.azure.cn%2Fpricing%2Fdetails%2Fmysql%2F&amp;data=02%7C01%7Csiwlv%40064d.mgd.microsoft.com%7C81d2fbf9d9904928001708d41415a7b9%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C636155530679177324&amp;sdata=8HLf5D5vAn6qjV0kro4M%2BRd3a7z0TUdO6a%2FWEBeEdkM%3D&amp;reserved=0\">https://www.azure.cn/pricing/details/mysql/</a>\n<br />\n<br />",
+  "LinkDisplayName0": "来源网站",
+  "LinkDisplayName1": "使用说明",
+}
