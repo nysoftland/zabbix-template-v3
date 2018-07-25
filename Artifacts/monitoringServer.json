@@ -45,7 +45,7 @@
       "defaultValue": {
         "publisher": "Canonical",
         "offer": "UbuntuServer",
-        "sku": "14.04.3-LTS",
+        "sku": "14.04.5-LTS",
         "version": "latest"
       }
     },
